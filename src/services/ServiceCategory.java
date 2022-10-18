@@ -94,7 +94,18 @@ public class ServiceCategory  implements IService<category> {
 
     @Override
     public void modifier(category t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String requete = "UPDATE category SET categoryNAME=?,categoryIMAGE=? WHERE categoryID=?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            pst.setLong(3, t.getCategoryID());
+            pst.setString(1, t.getCategoryNAME());
+            pst.setString(2, t.getCategoryIMAGE());
+            pst.executeUpdate();
+            System.out.println("Personne modifiée !");
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
     
     

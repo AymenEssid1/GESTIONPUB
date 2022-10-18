@@ -31,14 +31,15 @@
             <TextField fx:id="tfimage" layoutX="10.0" layoutY="10.0" />
          </children>
       </VBox>
-      <TableView fx:id="tvcat" layoutX="434.0" layoutY="96.0" prefHeight="529.0" prefWidth="716.0">
+      <TableView fx:id="tvcat" editable="true" layoutX="434.0" layoutY="96.0" prefHeight="529.0" prefWidth="716.0">
         <columns>
-          <TableColumn fx:id="colimage" prefWidth="122.0" text="Image" />
-          <TableColumn fx:id="colnomcat" prefWidth="510.0" text="Nom de categorie" />
+          <TableColumn fx:id="colimage" prefWidth="140.0" text="Image" />
+          <TableColumn fx:id="colnomcat" prefWidth="575.0" text="Nom de categorie" />
         </columns>
       </TableView>
-      <Button fx:id="btnajouter" layoutX="25.0" layoutY="361.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" text="Ajouter" />
-      <Button fx:id="btnmodifier" layoutX="134.0" layoutY="361.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" text="Modifier" />
-      <Button fx:id="btnsupprimer" layoutX="240.0" layoutY="361.0" mnemonicParsing="false" text="Supprimer" />
+      <Button fx:id="btnajouter" layoutX="25.0" layoutY="361.0" mnemonicParsing="false" onAction="#ajouterCategory" prefHeight="31.0" prefWidth="89.0" text="Ajouter" />
+      <Button fx:id="btnmodifier" layoutX="134.0" layoutY="361.0" mnemonicParsing="false" onAction="#modifiercategory" prefHeight="31.0" prefWidth="89.0" text="Modifier" />
+      <Button fx:id="btnsupprimer" layoutX="240.0" layoutY="361.0" mnemonicParsing="false" onAction="#supprimerCategory" prefHeight="31.0" prefWidth="97.0" text="Supprimer" />
+      <Button fx:id="edit2" layoutX="153.0" layoutY="483.0" mnemonicParsing="false" onAction="#editcat2" text="test" />
    </children>
 </AnchorPane>
