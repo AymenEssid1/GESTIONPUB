@@ -26,6 +26,15 @@ public class post {
     public post() {
     }
 
+    public post(long userID,String postTITLE, String postCONTENT) {
+        this.postTITLE = postTITLE;
+        this.postCONTENT = postCONTENT;
+        this.userID = userID;
+    }
+
+  
+    
+
     public post(long postID, String postTITLE, String postCONTENT, long userID, long categoryID, int postVOTE, int postNBCOM) {
         this.postID = postID;
         this.postTITLE = postTITLE;
