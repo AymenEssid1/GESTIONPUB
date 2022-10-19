@@ -26,6 +26,28 @@ public class post {
     public post() {
     }
 
+    public post(long postID,String postTITLE, String postCONTENT) {
+        this.postTITLE = postTITLE;
+        this.postCONTENT = postCONTENT;
+        this.postID = postID;
+    }
+
+    public post(long postID, String postTITLE, String postCONTENT, long userID) {
+        this.postID = postID;
+        this.postTITLE = postTITLE;
+        this.postCONTENT = postCONTENT;
+        this.userID = userID;
+    }
+
+    public post(String postTITLE, String postCONTENT) {
+        this.postTITLE = postTITLE;
+        this.postCONTENT = postCONTENT;
+    }
+
+   
+  
+    
+
     public post(long postID, String postTITLE, String postCONTENT, long userID, long categoryID, int postVOTE, int postNBCOM) {
         this.postID = postID;
         this.postTITLE = postTITLE;
@@ -64,6 +86,13 @@ public class post {
         this.postCONTENT = postCONTENT;
         this.userID = userID;
         this.categoryID = categoryID;
+        this.postVOTE = postVOTE;
+        this.postNBCOM = postNBCOM;
+    }
+
+    public post(String postTITLE, String postCONTENT, int postVOTE, int postNBCOM) {
+        this.postTITLE = postTITLE;
+        this.postCONTENT = postCONTENT;
         this.postVOTE = postVOTE;
         this.postNBCOM = postNBCOM;
     }

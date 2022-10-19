@@ -37,9 +37,10 @@
           <TableColumn fx:id="colnomcat" prefWidth="575.0" text="Nom de categorie" />
         </columns>
       </TableView>
-      <Button fx:id="btnajouter" layoutX="25.0" layoutY="361.0" mnemonicParsing="false" onAction="#ajouterCategory" prefHeight="31.0" prefWidth="89.0" text="Ajouter" />
-      <Button fx:id="btnmodifier" layoutX="134.0" layoutY="361.0" mnemonicParsing="false" onAction="#modifiercategory" prefHeight="31.0" prefWidth="89.0" text="Modifier" />
-      <Button fx:id="btnsupprimer" layoutX="240.0" layoutY="361.0" mnemonicParsing="false" onAction="#supprimerCategory" prefHeight="31.0" prefWidth="97.0" text="Supprimer" />
-      <Button fx:id="edit2" layoutX="153.0" layoutY="483.0" mnemonicParsing="false" onAction="#editcat2" text="test" />
+      <Button fx:id="btnajouter" layoutX="25.0" layoutY="361.0" mnemonicParsing="false" onAction="#ajouterCategory" prefHeight="31.0" prefWidth="116.0" text="Ajouter" />
+      <Button fx:id="btnmodifier" layoutX="134.0" layoutY="392.0" mnemonicParsing="false" onAction="#modifiercategory" prefHeight="31.0" prefWidth="116.0" text="Modifier" />
+      <Button fx:id="btnsupprimer" layoutX="250.0" layoutY="361.0" mnemonicParsing="false" onAction="#supprimerCategory" prefHeight="31.0" prefWidth="116.0" text="Supprimer" />
+      <Button fx:id="edit2" layoutX="134.0" layoutY="361.0" mnemonicParsing="false" onAction="#editcat2" prefHeight="31.0" prefWidth="116.0" text="selectionner" />
+      <Button fx:id="btnacceder" layoutX="1166.0" layoutY="338.0" mnemonicParsing="false" onAction="#acce" prefHeight="31.0" prefWidth="100.0" text="Acceder" />
    </children>
 </AnchorPane>

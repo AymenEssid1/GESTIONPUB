@@ -48,8 +48,17 @@ public class comment {
         this.postID = postID;
         this.commentVOTE = commentVOTE;
     }
-    
 
+    public comment(String commentCONTENT) {
+        this.commentCONTENT = commentCONTENT;
+    }
+
+    public comment(long commentID, String commentCONTENT) {
+        this.commentID = commentID;
+        this.commentCONTENT = commentCONTENT;
+    }
+    
+    
     public long getCommentID() {
         return commentID;
     }

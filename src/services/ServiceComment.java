@@ -6,6 +6,7 @@ package services;
 import entities.category;
 import entities.comment;
 import entities.post;
+import static gui.CatController.staticpost;
 import utils.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 /**
  *
  * @author SBS
@@ -25,13 +28,13 @@ public class ServiceComment implements IService<comment>{
     @Override
     public void ajouter(comment c) {
         try {
-        String requete = "INSERT INTO comment (commentCONTENT,userID,postID,commentVOTE,commentDate) VALUES (?,?,?,?,now())";
+        String requete = "INSERT INTO comment (commentCONTENT,postID,commentDate) VALUES (?,?,now())";
             PreparedStatement pst = cnx.prepareStatement(requete);
             
             pst.setString(1, c.getCommentCONTENT());
-            pst.setLong(2, c.getUserID());
-            pst.setLong(3, c.getPostID());
-            pst.setInt(4, c.getCommentVOTE());
+            
+           pst.setLong(2, staticpost.getPostID());
+           
             
             
           
@@ -86,6 +89,24 @@ public class ServiceComment implements IService<comment>{
         try {
             String requete = "SELECT * FROM comment";
             PreparedStatement pst = cnx.prepareStatement(requete);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                list.add(new comment( rs.getLong(1),rs.getString(2),rs.getLong(3),rs.getLong(4),rs.getInt(5),rs.getTimestamp(6)));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        return list;
+    }
+    public ObservableList<comment> afficherpp(post p) {
+        ObservableList<comment> list = FXCollections.observableArrayList();
+
+        try {
+            String requete = "SELECT * FROM comment where postID =?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            pst.setLong(1,p.getPostID());
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 list.add(new comment( rs.getLong(1),rs.getString(2),rs.getLong(3),rs.getLong(4),rs.getInt(5),rs.getTimestamp(6)));
