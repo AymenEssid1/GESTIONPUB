@@ -7,6 +7,7 @@ package gui;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.post;
+import entities.vote;
 import static gui.CatController.staticcat;
 import static gui.CatController.staticpost;
 import java.io.IOException;
@@ -41,10 +42,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import static gui.CatController.staticuserid;
+import services.ServiceVote;
 ///////////////////////////////////////////
 
 /**
@@ -76,7 +78,7 @@ public class PostController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        staticuserid=1;
         // TODO
         //showguipost();
         loadingg();
@@ -215,7 +217,9 @@ public class PostController implements Initializable {
                     } else {
 
                         FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
-                        FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL_SQUARE);
+                        FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.SAFARI);
+                        FontAwesomeIconView upicon = new FontAwesomeIconView(FontAwesomeIcon.ARROW_UP);
+                        FontAwesomeIconView downicon  = new FontAwesomeIconView(FontAwesomeIcon.ARROW_DOWN);
 
                         deleteIcon.setStyle(
                                 " -fx-cursor: hand ;"
@@ -226,6 +230,16 @@ public class PostController implements Initializable {
                                 " -fx-cursor: hand ;"
                                 + "-glyph-size:28px;"
                                 + "-fx-fill:#00E676;"
+                        );
+                        upicon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#000000"
+                        );
+                        downicon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#000000;"
                         );
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
 
@@ -256,11 +270,46 @@ public class PostController implements Initializable {
                             }
 
                         });
+                        upicon.setOnMouseClicked((MouseEvent event) -> {
 
-                        HBox managebtn = new HBox(editIcon, deleteIcon);
+                            upvote();
+                           showguipost();
+                            upicon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#00E676;"
+                                            );
+                            downicon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#000000;"
+                        );
+
+
+                        });
+                        downicon.setOnMouseClicked((MouseEvent event) -> {
+
+                            downvote();
+                            showguipost();
+                            downicon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#ff1744;"
+                        );
+                            upicon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#000000;"
+                        );
+                            showguipost();
+                        });
+
+                        HBox managebtn = new HBox(editIcon, deleteIcon,upicon,downicon);
                         managebtn.setStyle("-fx-alignment:center");
                         HBox.setMargin(deleteIcon, new Insets(2, 2, 0, 3));
                         HBox.setMargin(editIcon, new Insets(2, 3, 0, 2));
+                        HBox.setMargin(upicon, new Insets(3, 3, 0, 4));
+                        HBox.setMargin(downicon, new Insets(3, 4, 0, 3));
 
                         setGraphic(managebtn);
 
@@ -279,5 +328,84 @@ public class PostController implements Initializable {
         //tvpost.setItems(lista);
 
     }
+    
+    
 
+    
+     public void upvote() {
+         
+         ServiceVote sv = new ServiceVote();
+         post p = tvpost.getSelectionModel().getSelectedItem();
+         ServicePost sp = new ServicePost();
+         p.setUserID(staticuserid);
+         vote v =new vote(staticuserid,p.getPostID(),1);
+             
+         if (sv.isdisliked(p))
+         {   
+             
+             sv.modifier(v) ;
+             sp.plusone(p);
+             p.setPostVOTE(p.getPostVOTE()+1);
+             sp.plusone(p);
+         }
+         else if (sv.isliked(p)){ 
+         
+         System.out.println("already liked");
+         
+         }
+         else
+         {
+          sv.like(v);
+          sv.modifier(v) ;
+          sp.plusone(p);
+         }
+   
+     }
+             
+     public void downvote() {
+         
+         ServiceVote sv = new ServiceVote();
+         post p = tvpost.getSelectionModel().getSelectedItem();
+         ServicePost sp = new ServicePost();
+         p.setUserID(staticuserid);
+         vote v =new vote(staticuserid,p.getPostID(),-1);
+             
+         if (sv.isliked(p))
+         {   
+             
+             sv.modifier(v) ;
+             sp.minusone(p);
+             p.setPostVOTE(p.getPostVOTE()-1);
+             sp.minusone(p);
+         }else if (sv.isdisliked(p)){ 
+         
+         System.out.println("already disliked");
+         
+         }else{
+          sv.dislike(v);
+          sv.modifier(v) ;
+         sp.minusone(p);
+         }
+   
+     } 
+         
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

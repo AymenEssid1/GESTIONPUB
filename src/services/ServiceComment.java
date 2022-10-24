@@ -39,6 +39,9 @@ public class ServiceComment implements IService<comment>{
             
           
             pst.executeUpdate();
+            ServicePost sp= new ServicePost();
+            sp.plusonecomment(staticpost);
+            
             System.out.println("comment added !");
 
         } catch (SQLException ex) {
@@ -58,6 +61,8 @@ public class ServiceComment implements IService<comment>{
             PreparedStatement pst = cnx.prepareStatement(requete);
             pst.setLong(1, t.getCommentID());
             pst.executeUpdate();
+            ServicePost sp= new ServicePost();
+            sp.minusonecomment(staticpost);
             System.out.println("comment deleted !");
 
         } catch (SQLException ex) {

@@ -14,8 +14,9 @@
       <TableView fx:id="tvcomment" layoutX="218.0" layoutY="207.0" prefHeight="457.0" prefWidth="953.0">
         <columns>
           <TableColumn fx:id="colusercom" prefWidth="90.0" text="user" />
-          <TableColumn fx:id="colcom" prefWidth="675.0" text="comment" />
-            <TableColumn fx:id="coldatecom" prefWidth="187.0" text="date" />
+          <TableColumn fx:id="colcom" prefWidth="194.0" text="comment" />
+            <TableColumn fx:id="coldatecom" prefWidth="128.0" text="date" />
+            <TableColumn fx:id="colvotecom" prefWidth="128.0" text="vote" />
         </columns>
       </TableView>
       <Button layoutX="951.0" layoutY="37.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="83.0" text="UPVOTE" />

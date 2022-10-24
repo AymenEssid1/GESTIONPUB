@@ -63,6 +63,7 @@ public class CatController implements Initializable {
     
     public static category staticcat;
     public static post staticpost;
+    public static long staticuserid;
 
     /**
      * Initializes the controller class.

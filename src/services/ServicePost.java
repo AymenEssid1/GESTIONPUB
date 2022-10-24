@@ -118,5 +118,102 @@ public class ServicePost implements IService<post>{
     }
     
     
+   public void plusone(post t) {
+        try {
+            String requete = "UPDATE post SET postVOTE=? WHERE postID=?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            
+            pst.setInt(1, t.getPostVOTE()+1);
+            pst.setLong(2, t.getPostID());
+         
+            
+            
+           
+            pst.executeUpdate();
+            System.out.println("plus one  !");
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+   public void minusone(post t) {
+        try {
+            String requete = "UPDATE post SET postVOTE=? WHERE postID=?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            
+            pst.setInt(1, t.getPostVOTE()-1);
+            pst.setLong(2, t.getPostID());
+            
+            
+           
+            pst.executeUpdate();
+            System.out.println("minus one  !");
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    
+   }
+    
+    public int countcomment(post p){
+    int c=0 ; 
+    try {
+            String requete = "SELECT COUNT * FROM comment WHERE postID=?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            
+            pst.setLong(1, p.getPostID());
+           
+           
+            pst.executeUpdate();
+            ResultSet rs = pst.executeQuery();
+                        while (rs.next()) {
+                             c = rs.getInt(1);
+             }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    
+    
+     return c;
+    
+}
+    
+   public void plusonecomment(post t) {
+        try {
+            String requete = "UPDATE post SET postNBCOM=? WHERE postID=?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            
+            pst.setInt(1, t.getPostNBCOM()+1);
+            pst.setLong(2, t.getPostID());
+         
+            
+            
+           
+            pst.executeUpdate();
+            System.out.println("plus one  !");
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+    public void minusonecomment(post t) {
+        try {
+            String requete = "UPDATE post SET postNBCOM=? WHERE postID=?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            
+            pst.setInt(1, t.getPostNBCOM()-1);
+            pst.setLong(2, t.getPostID());
+         
+            
+            
+           
+            pst.executeUpdate();
+            System.out.println("plus one  !");
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
     
 }
