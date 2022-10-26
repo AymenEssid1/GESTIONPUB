@@ -10,17 +10,17 @@ import java.util.Objects;
  *
  * @author SBS
  */
-public class user {
+public class OLD {
     public long userID;
     private String userNAME;
     public long badgeID;
     private int karmaCOUNT;
     private String userIMAGE;
 
-    public user() {
+    public OLD() {
     }
 
-    public user(long userID, String userNAME, long badgeID, int karmaCOUNT, String userIMAGE) {
+    public OLD(long userID, String userNAME, long badgeID, int karmaCOUNT, String userIMAGE) {
         this.userID = userID;
         this.userNAME = userNAME;
         this.badgeID = badgeID;
@@ -28,11 +28,15 @@ public class user {
         this.userIMAGE = userIMAGE;
     }
 
-    public user(String userNAME, long badgeID, int karmaCOUNT, String userIMAGE) {
+    public OLD(String userNAME, long badgeID, int karmaCOUNT, String userIMAGE) {
         this.userNAME = userNAME;
         this.badgeID = badgeID;
         this.karmaCOUNT = karmaCOUNT;
         this.userIMAGE = userIMAGE;
+    }
+
+    public OLD(String userNAME) {
+        this.userNAME = userNAME;
     }
 
     public long getUserID() {
@@ -97,7 +101,7 @@ public class user {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final user other = (user) obj;
+        final OLD other = (OLD) obj;
         if (this.userID != other.userID) {
             return false;
         }

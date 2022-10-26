@@ -6,13 +6,18 @@
             <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/services/ServiceComment.java</file>
             <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/services/ServiceCategory.java</file>
             <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/test/guimain.java</file>
+            <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/test/TextSpeech.java</file>
+            <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/test/get_jod.java</file>
             <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/gui/PostController.java</file>
+            <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/gui/CatController.java</file>
+            <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/services/UtilisateurService.java</file>
             <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/gui/CommentController.java</file>
             <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/gui/Post_edit_addController.java</file>
-            <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/gui/CatController.java</file>
+            <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/utils/Texttospeech.java</file>
             <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/entities/post.java</file>
             <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/test/MainProg.java</file>
             <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/services/ServicePost.java</file>
+            <file>file:/C:/Users/aymen/Documents/NetBeansProjects/GESTIONPUB/src/entities/comment.java</file>
         </group>
     </open-files>
 </project-private>

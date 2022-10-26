@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 package gui;
-
+import static gui.CatController.connectedUser;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.post;
@@ -45,8 +45,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import static gui.CatController.staticuserid;
+import static gui.CatController.connectedUser;
+import static gui.CatController.voice;
 import services.ServiceVote;
+import utils.Texttospeech;
 ///////////////////////////////////////////
 
 /**
@@ -78,7 +80,7 @@ public class PostController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        staticuserid=1;
+        //connectedUser.getId()=1;
         // TODO
         //showguipost();
         loadingg();
@@ -106,20 +108,24 @@ public class PostController implements Initializable {
         ObservableList<post> lista = sp.afficherpp(staticcat);
 
         colposttitle.setCellValueFactory(new PropertyValueFactory<post, String>("postTITLE"));
-        colpostedby.setCellValueFactory(new PropertyValueFactory<post, String>("userID"));
+        colpostedby.setCellValueFactory(new PropertyValueFactory<post, String>("userNAME"));
         colpostvotes.setCellValueFactory(new PropertyValueFactory<post, String>("postVOTE"));
         colpostcomments.setCellValueFactory(new PropertyValueFactory<post, String>("postNBCOM"));
         colpostdate.setCellValueFactory(new PropertyValueFactory<post, Timestamp>("postDATE"));
-
+        System.out.println(lista);
+                
         tvpost.setItems(lista);
 
     }
 
     @FXML
     private void supprimerpost(ActionEvent event) {
+        
         post p = tvpost.getSelectionModel().getSelectedItem();
-
-        ServicePost sp = new ServicePost();
+        
+        if ((connectedUser.getrole().equals("Admin"))||(connectedUser.getId()==p.getUserID())){
+        
+         ServicePost sp = new ServicePost();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation supp ");
@@ -135,11 +141,21 @@ public class PostController implements Initializable {
         } else {
             alert.hide();
         }
+        
+        
+        
+        
+        }
+
+        else{Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("WARNING");
+        alert.setHeaderText("THIS POST DOES NOT BELONG TO YOU ");}
 
     }
 
     @FXML
     private void modifierpost(ActionEvent event) throws IOException {
+        
         if (tvpost.getSelectionModel().getSelectedItem() != null) {
             staticpost = tvpost.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("post_edit_add.fxml"));
@@ -152,7 +168,7 @@ public class PostController implements Initializable {
             pea.getTfuseridpost().setText(Long.toString(staticpost.getUserID()));
 
         }
-
+        
     }
 
     @FXML
@@ -188,14 +204,37 @@ public class PostController implements Initializable {
             CommentController cc = loader.getController();
             cc.setLbposttitle(staticpost.getPostTITLE());
             cc.setLbpostcontent(staticpost.getPostCONTENT());
+            cc.setLbpostvote(Integer.toString(staticpost.getPostVOTE()));
+            
+            
+             
+                                          
 
         }
 
+    } 
+     @FXML
+    public void hoveraccpost(){
+        if (voice==1){
+            if (tvpost.getSelectionModel().getSelectedItem() != null) {
+    
+                Texttospeech t= new Texttospeech();
+        
+                t.speak("you are about to reach the post"+tvpost.getSelectionModel().getSelectedItem().getPostTITLE());}
+             if (tvpost.getSelectionModel().getSelectedItem() == null){
+              Texttospeech t= new Texttospeech();
+        
+                t.speak("please select a post before clicking");}
+    
+    }
+    
     }
 
     private void loadingg() {
 
         showguipost();
+        
+         
         colposttitle.setCellValueFactory(new PropertyValueFactory<post, String>("postTITLE"));
         colpostedby.setCellValueFactory(new PropertyValueFactory<post, String>("userID"));
         colpostvotes.setCellValueFactory(new PropertyValueFactory<post, String>("postVOTE"));
@@ -242,14 +281,40 @@ public class PostController implements Initializable {
                                 + "-fx-fill:#000000;"
                         );
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
+                           post p = tvpost.getSelectionModel().getSelectedItem();
+        
+        if ((connectedUser.getrole().equals("Admin"))||(connectedUser.getId()==p.getUserID())){
+        
+         ServicePost sp = new ServicePost();
 
-                            post p = tvpost.getSelectionModel().getSelectedItem();
-                            ServicePost sp = new ServicePost();
-                            sp.supprimer(p);
-                            showguipost();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation supp ");
+        alert.setHeaderText("Confirmation suppression publication intitulée : " + p.getPostTITLE());
+        alert.setContentText("Avec confirmation cette PUBLICATION va être supprimé d'un manière difinitive");
 
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            sp.supprimer(p);
+            JOptionPane.showMessageDialog(null, "publication supprimée ! ");
+            showguipost();
+            alert.hide();
+        } else {
+            alert.hide();
+        }
+        
+        
+        
+        
+        }else{Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("WARNING");
+        alert.setHeaderText("THIS POST DOES NOT BELONG TO YOU ");
+        alert.show();
+        }
+        
                         });
                         editIcon.setOnMouseClicked((MouseEvent event) -> {
+                            post p=tvpost.getSelectionModel().getSelectedItem();
+                            if ((connectedUser.getrole().equals("Admin"))||(connectedUser.getId()==p.getUserID())){
                             if (tvpost.getSelectionModel().getSelectedItem() != null) {
                                 staticpost = tvpost.getSelectionModel().getSelectedItem();
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("post_edit_add.fxml"));
@@ -265,9 +330,12 @@ public class PostController implements Initializable {
                                 Post_edit_addController pea = loader.getController();
                                 pea.getTapostcontent().setText(staticpost.getPostCONTENT());
                                 pea.getTaposttitle().setText(staticpost.getPostTITLE());
-                                pea.getTfuseridpost().setText(Long.toString(staticpost.getUserID()));
+                                pea.getTfuseridpost().setText(Long.toString(staticpost.getUserID()));}
 
-                            }
+                            } else{Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("WARNING");
+        alert.setHeaderText("THIS POST DOES NOT BELONG TO YOU ");
+                            alert.show();}
 
                         });
                         upicon.setOnMouseClicked((MouseEvent event) -> {
@@ -324,6 +392,7 @@ public class PostController implements Initializable {
         };
         action.setCellFactory(cellFoctory);
         showguipost();
+        
         //studentsTable.setItems(StudentList);
         //tvpost.setItems(lista);
 
@@ -337,8 +406,8 @@ public class PostController implements Initializable {
          ServiceVote sv = new ServiceVote();
          post p = tvpost.getSelectionModel().getSelectedItem();
          ServicePost sp = new ServicePost();
-         p.setUserID(staticuserid);
-         vote v =new vote(staticuserid,p.getPostID(),1);
+         p.setUserID(connectedUser.getId());
+         vote v =new vote(connectedUser.getId(),p.getPostID(),1);
              
          if (sv.isdisliked(p))
          {   
@@ -349,7 +418,18 @@ public class PostController implements Initializable {
              sp.plusone(p);
          }
          else if (sv.isliked(p)){ 
-         
+         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("WARNING ");
+        alert.setHeaderText("already upvoted");
+        
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            
+            alert.hide();
+        } else {
+            alert.hide();
+        }
          System.out.println("already liked");
          
          }
@@ -367,8 +447,8 @@ public class PostController implements Initializable {
          ServiceVote sv = new ServiceVote();
          post p = tvpost.getSelectionModel().getSelectedItem();
          ServicePost sp = new ServicePost();
-         p.setUserID(staticuserid);
-         vote v =new vote(staticuserid,p.getPostID(),-1);
+         p.setUserID(connectedUser.getId());
+         vote v =new vote(connectedUser.getId(),p.getPostID(),-1);
              
          if (sv.isliked(p))
          {   
@@ -378,7 +458,18 @@ public class PostController implements Initializable {
              p.setPostVOTE(p.getPostVOTE()-1);
              sp.minusone(p);
          }else if (sv.isdisliked(p)){ 
-         
+         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("WARNING");
+        alert.setHeaderText("already downvoted ");
+        
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            
+            alert.hide();
+        } else {
+            alert.hide();
+        }
          System.out.println("already disliked");
          
          }else{
@@ -389,23 +480,4 @@ public class PostController implements Initializable {
    
      } 
          
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

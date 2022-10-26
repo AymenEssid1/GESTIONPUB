@@ -3,9 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package services;
+
+import static gui.CatController.connectedUser;
+
 import entities.category;
 import entities.post;
 import static gui.CatController.staticcat;
+
 import utils.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,12 +30,14 @@ public class ServicePost implements IService<post>{
     @Override
     public void ajouter(post c) {
        try {
-            String requete = "INSERT INTO post (postTITLE,postCONTENT,categoryID,postDate) VALUES (?,?,?,now())";
+            String requete = "INSERT INTO post (postTITLE,postCONTENT,categoryID,userID,postDate) VALUES (?,?,?,?,now())";
             PreparedStatement pst = cnx.prepareStatement(requete);
             
             pst.setString(1, c.getPostTITLE());
             pst.setString(2, c.getPostCONTENT());
             pst.setLong(3, staticcat.getCategoryID());
+            pst.setLong(4, connectedUser.getId());
+           
             //pst.setLong(3, c.getUserID());
             //pst.setInt(5, c.getPostVOTE());
             //pst.setInt(6, c.getPostNBCOM());
@@ -102,12 +108,12 @@ public class ServicePost implements IService<post>{
         ObservableList<post> list = FXCollections.observableArrayList();
 
         try {
-            String requete = "SELECT * FROM post where categoryID =?";
+            String requete = "SELECT post.*, user.nom FROM post JOIN user on post.userID=user.idUtilisateur where categoryID =?";
             PreparedStatement pst = cnx.prepareStatement(requete);
             pst.setLong(1,c.getCategoryID());
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                list.add(new post( rs.getLong(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getLong(5),rs.getInt(6),rs.getInt(7),rs.getTimestamp(8)));
+                list.add(new post( rs.getLong(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getLong(5),rs.getInt(6),rs.getInt(7),rs.getTimestamp(8),rs.getString(9)));
             }
 
         } catch (SQLException ex) {

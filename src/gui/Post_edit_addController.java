@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 package gui;
-
+import static gui.CatController.connectedUser;
 import entities.category;
 import entities.post;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import static gui.CatController.staticcat;
 import static gui.CatController.staticpost;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 
 /**
  * FXML Controller class
@@ -74,7 +75,7 @@ public class Post_edit_addController implements Initializable {
          
         
         sp.ajouter(new post(taposttitle.getText(),tapostcontent.getText())); //la méthode getText() retourne toujours une chaine de caractère 
-        JOptionPane.showMessageDialog(null,"pub ajoutée");
+        JOptionPane.showMessageDialog(null,"POST ADDED !");
         
         FXMLLoader loader= new FXMLLoader(getClass().getResource("post.fxml"));
         Parent root =loader.load();
@@ -84,6 +85,8 @@ public class Post_edit_addController implements Initializable {
     }
      @FXML
     private void modifierPost(ActionEvent event) throws IOException {
+        ///post p=tvpost.getSelectionModel().getSelectedItem();
+       
         ServicePost sp = new ServicePost();
          
         
@@ -94,10 +97,12 @@ public class Post_edit_addController implements Initializable {
         Parent root =loader.load();
         tapostcontent.getScene().setRoot(root); 
         PostController pc =loader.getController();
-        pc.setLbcatpost(staticcat.getCategoryNAME());
+        pc.setLbcatpost(staticcat.getCategoryNAME());}
+       
+
     }
     
     
     
     
-}
+
